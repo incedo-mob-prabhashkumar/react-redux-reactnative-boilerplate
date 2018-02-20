@@ -27,7 +27,7 @@ const dataReducer2 = (state = dataState, action) => {
  
 // Combine all the reducers
 const rootReducer = combineReducers({
-    dataReducer
+    dataReducer,dataReducer2
     // ,[ANOTHER REDUCER], [ANOTHER REDUCER] ....
 })
  
