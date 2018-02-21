@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
+import { StackNavigator} from 'react-navigation';
 var {
     StyleSheet,
     ListView,
@@ -12,22 +13,38 @@ var {
     Button
 } = require('react-native');
 
+
+
+import MyListItem from './listitem';
+
+
+  
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
 let DATA = [];
-class Home extends Component {
 
+const navApp = StackNavigator({
+    MyListItem: { screen: MyListItem },
+   });
+  
+class Home extends Component {
+    
     constructor(props) {
         super(props);
         console.log(props);
+    
+       // const navApp = this.props.navigation;
+       // console.log(navApp);
 
         var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             ds: ds.cloneWithRows(DATA),
         };
         this._renderRow = this._renderRow.bind(this);
+       
+
     }
 
     componentDidMount() {
@@ -52,6 +69,8 @@ class Home extends Component {
     }
 
     render() {
+        
+
         if (this.props.loading) {
             return (
                 <View style={styles.activityIndicatorContainer}>
@@ -65,10 +84,12 @@ class Home extends Component {
         } else {
             return (
                 <View style={{ flex: 1, backgroundColor: '#F5F5F5', paddingTop: 20 }}>
-                    <Button onPress={() => this.onPressButton(this.props.data)} title="Learn More"
-                        color="#841584"
-                        accessibilityLabel="Learn more about this purple button"
-                    />
+                   <Button
+        title="Go to deatils"
+        onPress={() =>
+            this.props.navigation.navigate('MyListItem', { name: 'Jane' })
+        }
+      />
 
                     <ListView enableEmptySections={true}
                         dataSource={this.state.ds.cloneWithRows(this.props.data)}

@@ -11,11 +11,13 @@ import {
   Text,
   View
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
 import { Provider } from 'react-redux';
  
 import store from './app/store'; //Import the store
-import Home from './app/components/home' //Import the component file
+import Home from './app/components/home' //Import the component file;
+import MyListItem from './app/components/listitem';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -24,15 +26,19 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+const NavApp = StackNavigator({
+  Home: { screen: Home,store },
+  MyListItem: { screen: MyListItem },
+ });
 
 export default class App extends Component {
   render() {
-    return (
-       
-            <Home store={store} />
-     
-    );
-}
+    return (  
+           <Provider store={store}>
+            <NavApp  />  
+            </Provider>
+     );
+   }
 }
 
 const styles = StyleSheet.create({
