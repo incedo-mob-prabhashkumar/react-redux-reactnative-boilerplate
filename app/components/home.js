@@ -1,5 +1,5 @@
 'use strict';
- 
+
 import React, { Component } from 'react';
 var {
     StyleSheet,
@@ -11,95 +11,95 @@ var {
     Alert,
     Button
 } = require('react-native');
- 
-import {bindActionCreators} from 'redux';
+
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
- 
+
 import * as Actions from '../actions'; //Import your actions
-let DATA =[];
+let DATA = [];
 class Home extends Component {
-   
+
     constructor(props) {
         super(props);
         console.log(props);
 
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             ds: ds.cloneWithRows(DATA),
         };
-        this._renderRow=this._renderRow.bind(this);
-    }
- 
-    componentDidMount() {
-      //  this.props.getData(); //call our action
-        this.props.showData(); 
+        this._renderRow = this._renderRow.bind(this);
     }
 
-    onPressButton(data){
+    componentDidMount() {
+        //  this.props.getData(); //call our action
+        this.props.showData();
+    }
+
+    onPressButton(data) {
 
         Alert.alert(
             'Alert Title',
             'My Alert Msg',
             [
-              {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-              {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: 'OK', onPress: () => console.log(data)},
+                { text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'OK', onPress: () => console.log(data) },
             ],
             { cancelable: false }
-          )
-          
-          console.log("ok pressed");
+        )
+
+        console.log("ok pressed");
     }
- 
+
     render() {
         if (this.props.loading) {
             return (
                 <View style={styles.activityIndicatorContainer}>
                     <ActivityIndicator
                         animating={true}
-                        style={[{height: 150}]}
+                        style={[{ height: 150 }]}
                         size="large"
                     />
                 </View>
             );
         } else {
             return (
-                <View style={{flex:1, backgroundColor: '#F5F5F5', paddingTop:20}}>
-                   <Button onPress={()=>this.onPressButton(this.props.data)} title="Learn More"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
+                <View style={{ flex: 1, backgroundColor: '#F5F5F5', paddingTop: 20 }}>
+                    <Button onPress={() => this.onPressButton(this.props.data)} title="Learn More"
+                        color="#841584"
+                        accessibilityLabel="Learn more about this purple button"
+                    />
 
                     <ListView enableEmptySections={true}
-                              dataSource={this.state.ds.cloneWithRows(this.props.data)}
-                              renderRow={this._renderRow}/>
-                           
+                        dataSource={this.state.ds.cloneWithRows(this.props.data)}
+                        renderRow={this._renderRow} />
+
                 </View>
             );
         }
     }
- 
+
     _renderRow(rowData, sectionID, rowID) {
         return (
-           
+
             <View style={styles.row}   >
-             
+
                 <Text style={styles.title}>
                     {(parseInt(rowID) + 1)}{". "}{rowData.title}
                 </Text>
-                <Text style={styles.description} onPress={()=>this.onPressButton(rowData.description)}>
+                <Text style={styles.description} onPress={() => this.onPressButton(rowData.description)}>
                     {rowData.description}
                 </Text>
-                    
+
             </View>
-           
+
         )
     }
-    
+
 };
- 
- 
- 
+
+
+
 // The function takes data from the app current state,
 // and insert/links it into the props of our component.
 // This function makes Redux know that this component needs to be passed a piece of the state
@@ -109,38 +109,38 @@ function mapStateToProps(state, props) {
         data: state.dataReducer2.data
     }
 }
- 
+
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
 // Just by doing this, we will have access to the actions defined in out actions file (action/home.js)
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(Actions, dispatch);
 }
- 
+
 //Connect everything
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
- 
+
 var styles = StyleSheet.create({
-    activityIndicatorContainer:{
+    activityIndicatorContainer: {
         backgroundColor: "#fff",
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1
     },
- 
-    row:{
+
+    row: {
         borderBottomWidth: 1,
         borderColor: "#ccc",
         // height: 50,
         padding: 10
     },
- 
-    title:{
+
+    title: {
         fontSize: 15,
         fontWeight: "600"
     },
- 
-    description:{
+
+    description: {
         marginTop: 5,
         fontSize: 14,
     }
