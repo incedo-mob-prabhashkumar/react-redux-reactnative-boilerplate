@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
  
 import { DATA_AVAILABLE } from "../actions/" //Import the actions types constant we defined in our actions
- 
+//import { DATA_AVAILABLE2 } from "../actions/" 
+
 let dataState = { data: [], loading:true };
  
 const dataReducer = (state = dataState, action) => {

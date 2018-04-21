@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { StackNavigator} from 'react-navigation';
-var {
+import {
     StyleSheet,
     ListView,
     View,
@@ -11,23 +11,16 @@ var {
     TouchableHighlight,
     Alert,
     Button
-} = require('react-native');
-
-
+} from 'react-native';
 
 import MyListItem from './listitem';
-
-
-  
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as Actions from '../actions'; //Import your actions
-let DATA = [];
+let DATA= [];
 
-const navApp = StackNavigator({
-    MyListItem: { screen: MyListItem },
-   });
+
   
 class Home extends Component {
     
@@ -85,9 +78,13 @@ class Home extends Component {
             return (
                 <View style={{ flex: 1, backgroundColor: '#F5F5F5', paddingTop: 20 }}>
                    <Button
-        title="Go to deatils"
+        title="Go to Album"
         onPress={() =>
-            this.props.navigation.navigate('MyListItem', { name: 'Jane' })
+           { 
+               console.log(this.props)
+               this.props.navigation.navigate('Album',{ name: 'Album' })
+            
+            }
         }
       />
 
@@ -141,9 +138,12 @@ function mapDispatchToProps(dispatch) {
 //Connect everything
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
+
+
+
 var styles = StyleSheet.create({
     activityIndicatorContainer: {
-        backgroundColor: "#fff",
+        backgroundColor: "grey",
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1
@@ -151,7 +151,7 @@ var styles = StyleSheet.create({
 
     row: {
         borderBottomWidth: 1,
-        borderColor: "#ccc",
+        borderColor: "black",
         // height: 50,
         padding: 10
     },

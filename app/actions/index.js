@@ -1,5 +1,5 @@
 export const DATA_AVAILABLE = 'DATA_AVAILABLE';
-
+export const DATA_AVAILABLE2 = 'DATA_AVAILABLE2';
 //Import the sample data
 import Data from '../instructions.json';
  
@@ -25,7 +25,7 @@ export function showData(){
         setTimeout(() => {
             var data  = Data.instructions;
             dispatch({type: DATA_AVAILABLE, data:data});
-        }, 1000);
+        }, 2000);
  
     };
 }
